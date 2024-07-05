@@ -1,28 +1,22 @@
-.navbar-brand {
-  img {
-    width: 150px;
-  }
+.navbar-brand img {
+  width: 150px;
 }
 
 .nav-link {
   text-transform: capitalize;
 }
 
-.main-first {
+.main-first h2 {
 
-  h2 {
-    position: absolute;
-    font-size: 3.5rem;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-  }
+  position: absolute;
+  font-size: 3.5rem;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 }
 
-.main-type-img {
-  img {
-    width: 350px;
-  }
+.main-type-img img {
+  width: 350px;
 }
 
 .main-type-title {
@@ -41,16 +35,14 @@
   height: 500px;
   width: 100vw;
   overflow: hidden;
+}
 
-  img {
-    width: 100%;
-  }
+.flowers-cont img {
+  width: 100%;
 }
 
 @media (width > 768px) {
-  .main-type-img {
-    img {
-      width: 400px;
-    }
+  .main-type-img img {
+    width: 400px;
   }
 }
