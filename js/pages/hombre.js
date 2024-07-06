@@ -1,10 +1,10 @@
-import { lineasMujer } from '../panel.js';
-const lineasMujerContainer = document.getElementById('lineasMujerContainer');
-lineasMujer.forEach((linea) => {
+import { lineasHombre } from '../panel.js';
+const lineasHombreContainer = document.getElementById('lineasHombreContainer');
+lineasHombre.forEach((linea) => {
 	const loader = document.getElementById('loader');
 	loader.style.display = 'none';
 	console.log(linea.data());
-	lineasMujerContainer.innerHTML += `
+	lineasHombreContainer.innerHTML += `
     <div class="card m-4" style="width: 18rem;">
       <img src="${linea.data().data.url}" class="card-img-top" alt="...">
       <div class="card-body">

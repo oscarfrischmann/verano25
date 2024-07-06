@@ -1,32 +1,32 @@
-import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.3/firebase-app.js";
+import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.12.3/firebase-app.js';
 import {
-  getStorage,
-  ref,
-  uploadBytes,
-  listAll,
-  getDownloadURL,
-  deleteObject,
-} from "https://www.gstatic.com/firebasejs/10.12.3/firebase-storage.js";
+	getStorage,
+	ref,
+	uploadBytes,
+	listAll,
+	getDownloadURL,
+	deleteObject,
+} from 'https://www.gstatic.com/firebasejs/10.12.3/firebase-storage.js';
 import {
-  getFirestore,
-  collection,
-  query,
-  where,
-  getDocs,
-  getDoc,
-  doc,
-  setDoc,
-  deleteDoc,
-  updateDoc,
-} from "https://www.gstatic.com/firebasejs/10.12.3/firebase-firestore.js";
+	getFirestore,
+	collection,
+	query,
+	where,
+	getDocs,
+	getDoc,
+	doc,
+	setDoc,
+	deleteDoc,
+	updateDoc,
+} from 'https://www.gstatic.com/firebasejs/10.12.3/firebase-firestore.js';
 
 const firebaseConfig = {
-  apiKey: "AIzaSyBroVNx30DfKRGO1yBedvg4cwTnNQeNkqs",
-  authDomain: "verano25-fc8ff.firebaseapp.com",
-  projectId: "verano25-fc8ff",
-  storageBucket: "verano25-fc8ff.appspot.com",
-  messagingSenderId: "852998628617",
-  appId: "1:852998628617:web:85a17711c232e308e61fd8",
+	apiKey: 'AIzaSyBroVNx30DfKRGO1yBedvg4cwTnNQeNkqs',
+	authDomain: 'verano25-fc8ff.firebaseapp.com',
+	projectId: 'verano25-fc8ff',
+	storageBucket: 'verano25-fc8ff.appspot.com',
+	messagingSenderId: '852998628617',
+	appId: '1:852998628617:web:85a17711c232e308e61fd8',
 };
 
 const app = initializeApp(firebaseConfig);
@@ -36,178 +36,197 @@ const storageRef = ref(storage);
 
 //UPLOAD IMAGES
 const uploadImages = async (HtMLform, fileInput, DBdirectory) => {
-  const formU = document.getElementById(`${HtMLform}`);
+	const formU = document.getElementById(`${HtMLform}`);
 
-  if (formU) {
-    formU.addEventListener("submit", (e) => {
-      e.preventDefault();
-      const file = document.getElementById(`${fileInput}`).files;
-      for (let i = 0; i < file.length; i++) {
-        const fileRef = ref(storage, `${DBdirectory}/${file[i].name}`);
-        uploadBytes(fileRef, file[i])
-          .then((snapshot) => {
-            console.log(`Uploaded for ${DBdirectory}!`);
-          })
-          .catch((error) => {
-            console.log("Upload failed:", error);
-          });
-      }
-    });
-  }
+	if (formU) {
+		formU.addEventListener('submit', (e) => {
+			e.preventDefault();
+			const file = document.getElementById(`${fileInput}`).files;
+			for (let i = 0; i < file.length; i++) {
+				const fileRef = ref(storage, `${DBdirectory}/${file[i].name}`);
+				uploadBytes(fileRef, file[i])
+					.then((snapshot) => {
+						console.log(`Uploaded for ${DBdirectory}!`);
+					})
+					.catch((error) => {
+						console.log('Upload failed:', error);
+					});
+			}
+		});
+	}
 };
 //UPLOAD IMAGES END
 
-// Activar UPLOAD IMAGES para cada formulario
-uploadImages("indexForm", "indexImgs", "index");
-uploadImages("mujerImgForm", "lineasMujerImgs", "lineasMujer");
+// Activar UPLOAD IMAGES para cada sección
+uploadImages('indexForm', 'indexImgs', 'index');
+uploadImages('mujerImgForm', 'lineasMujerImgs', 'lineasMujer');
+uploadImages('hombreImgForm', 'lineasHombreImgs', 'lineasHombre');
 
 //LIST IMAGES
 const imgLinks = [];
 
 const showImages = (DBdirectory, imgsContainer, button, URLinput, form) => {
-  const listRef = ref(storage, `${DBdirectory}`);
-  const HTMLimgsContainer = document.getElementById(`${imgsContainer}`);
-  const showImgsButton = document.getElementById(`${button}`);
-  if (showImgsButton) {
-    showImgsButton.addEventListener("click", async () => {
-      listAll(listRef)
-        .then((res) => {
-          res.items.forEach((itemRef) => {
-            getDownloadURL(ref(storage, `${DBdirectory}/${itemRef.name}`))
-              .then((url) => {
-                imgLinks.push(url);
-                HTMLimgsContainer.innerHTML += `
-             <div>
+	const listRef = ref(storage, `${DBdirectory}`);
+	const HTMLimgsContainer = document.getElementById(`${imgsContainer}`);
+	const showImgsButton = document.getElementById(`${button}`);
+	if (showImgsButton) {
+		showImgsButton.addEventListener('click', async () => {
+			listAll(listRef)
+				.then((res) => {
+					res.items.forEach((itemRef) => {
+						getDownloadURL(ref(storage, `${DBdirectory}/${itemRef.name}`))
+							.then((url) => {
+								imgLinks.push(url);
+								HTMLimgsContainer.innerHTML += `
+            <div>
               <img src=${url} style="width: 200px;" class="mb-3" id=${itemRef.name}>
               <button id=index-${itemRef.name} class="btn btn-primary ms-2 ${DBdirectory}" disabled>Usar</button>
             </div>
       `;
-              })
-              .catch((err) => {
-                console.log(err);
-              });
-          });
-        })
-        .catch((err) => {
-          console.log(err);
-        });
-      useImageButtons(DBdirectory, form, URLinput);
-      console.log(imgLinks);
-    });
-  }
+							})
+							.catch((err) => {
+								console.log(err);
+							});
+					});
+				})
+				.catch((err) => {
+					console.log(err);
+				});
+			useImageButtons(DBdirectory, form, URLinput);
+			console.log(imgLinks);
+		});
+	}
 };
 
 //USAR IMAGENES y cargar por Formulario
 
-const useIndexImgs = document.getElementById("useIndexImgs");
+const useIndexImgs = document.getElementById('useIndexImgs');
 if (useIndexImgs) {
-  useIndexImgs.addEventListener("submit", async (e) => {
-    e.preventDefault();
-    let indexImage = {};
-    const cat = useIndexImgs["categoryIndex"].value.toLowerCase();
-    indexImage[cat] = useIndexImgs["indexImage"].value;
-    // const key = Object.keys(indexImage);
-    // const update = {};
-    // update[key] = true;
-    // console.log(update);
+	useIndexImgs.addEventListener('submit', async (e) => {
+		e.preventDefault();
+		let indexImage = {};
+		const cat = useIndexImgs['categoryIndex'].value.toLowerCase();
+		indexImage[cat] = useIndexImgs['indexImage'].value;
+		// const key = Object.keys(indexImage);
+		// const update = {};
+		// update[key] = true;
+		// console.log(update);
 
-    try {
-      await updateDoc(doc(db, "index", "indexImages"), indexImage);
-      console.log("OK!");
-    } catch (err) {
-      throw new Error("set Category Image", err);
-    }
-  });
+		try {
+			await updateDoc(doc(db, 'index', 'indexImages'), indexImage);
+			console.log('OK!');
+		} catch (err) {
+			throw new Error('set Category Image', err);
+		}
+	});
 }
 
-const useLineasMujerImgs = document.getElementById("useLineasMujerImgs");
+const useLineasMujerImgs = document.getElementById('useLineasMujerImgs');
 if (useLineasMujerImgs) {
-  useLineasMujerImgs.addEventListener("submit", async (e) => {
-    e.preventDefault();
-    let lineaMujerImage = {};
-    const data = {
-      linea: useLineasMujerImgs["lineaMujer"].value.toLowerCase(),
-      data: {
-        data: {
-          descripcion:
-            useLineasMujerImgs["lineaMujerDescipcion"].value.toLowerCase(),
-          fondo: useLineasMujerImgs["lineaMujerFondo"].value.toLowerCase(),
-          numeracion: [
-            useLineasMujerImgs["lineaMujerNumeracionMin"].value,
-            useLineasMujerImgs["lineaMujerNumeracionMax"].value,
-          ],
-          url: useLineasMujerImgs["lineaMujerURL"].value,
-          linea: useLineasMujerImgs["lineaMujer"].value.toLowerCase(),
-        },
-      },
-    };
-    try {
-      await setDoc(doc(db, "mujer", data.linea), data.data, { merge: true });
-      console.log("OK! agregando linea");
-    } catch (err) {
-      throw new Error("set Category Image", err);
-    }
-  });
+	useLineasMujerImgs.addEventListener('submit', async (e) => {
+		e.preventDefault();
+		let lineaMujerImage = {};
+		const data = {
+			linea: useLineasMujerImgs['lineaMujer'].value.toLowerCase(),
+			data: {
+				data: {
+					descripcion: useLineasMujerImgs['lineaMujerDescipcion'].value.toLowerCase(),
+					fondo: useLineasMujerImgs['lineaMujerFondo'].value.toLowerCase(),
+					numeracion: [
+						useLineasMujerImgs['lineaMujerNumeracionMin'].value,
+						useLineasMujerImgs['lineaMujerNumeracionMax'].value,
+					],
+					url: useLineasMujerImgs['lineaMujerURL'].value,
+					linea: useLineasMujerImgs['lineaMujer'].value.toLowerCase(),
+				},
+			},
+		};
+		try {
+			await setDoc(doc(db, 'mujer', data.linea), data.data, { merge: true });
+			console.log('OK! agregando linea MUJER');
+		} catch (err) {
+			throw new Error('set Category Image', err);
+		}
+	});
 }
+const useLineasHombreImgs = document.getElementById('useLineasHombreImgs');
+if (useLineasHombreImgs) {
+	useLineasHombreImgs.addEventListener('submit', async (e) => {
+		e.preventDefault();
+		let lineaHombreImage = {};
+		const data = {
+			linea: useLineasHombreImgs['lineaHombre'].value.toLowerCase(),
+			data: {
+				data: {
+					descripcion: useLineasHombreImgs['lineaHombreDescipcion'].value.toLowerCase(),
+					fondo: useLineasHombreImgs['lineaHombreFondo'].value.toLowerCase(),
+					numeracion: [
+						useLineasHombreImgs['lineaHombreNumeracionMin'].value,
+						useLineasHombreImgs['lineaHombreNumeracionMax'].value,
+					],
+					url: useLineasHombreImgs['lineaHombreURL'].value,
+					linea: useLineasHombreImgs['lineaHombre'].value.toLowerCase(),
+				},
+			},
+		};
+		try {
+			await setDoc(doc(db, 'hombre', data.linea), data.data, { merge: true });
+			console.log('OK! agregando linea HOMBRE');
+		} catch (err) {
+			throw new Error('set Category Image', err);
+		}
+	});
+}
+//(DBdirectory, imgsContainer, button, URLinput, form)
+showImages('index', 'indexImages', 'showIndexImages', 'indexImage', useIndexImgs);
+showImages('lineasMujer', 'lineasMujerImages', 'showLineasMujerImages', 'lineaMujerURL', useLineasMujerImgs);
+showImages('lineasHombre', 'lineasHombreImages', 'showLineasHombreImages', 'lineaHombreURL', useLineasHombreImgs);
 
-showImages(
-  "index",
-  "indexImages",
-  "showIndexImages",
-  "indexImage",
-  useIndexImgs
-);
-showImages(
-  "lineasMujer",
-  "lineasMujerImages",
-  "showLineasMujerImages",
-  "lineaMujerURL",
-  useLineasMujerImgs
-);
 async function useImageButtons(DBdirectory, form, URLinput) {
-  setTimeout(() => {
-    const use = document.querySelectorAll(`.${DBdirectory}`);
-    console.log(use);
-    use.forEach((button, i) => {
-      button.removeAttribute("disabled");
-      button.addEventListener("click", (event) => {
-        const img = imgLinks[i];
-        console.log(img);
-        form[URLinput].value = img;
-      });
-    });
-  }, 2500);
+	setTimeout(() => {
+		const use = document.querySelectorAll(`.${DBdirectory}`);
+		console.log(use);
+		use.forEach((button, i) => {
+			button.removeAttribute('disabled');
+			button.addEventListener('click', (event) => {
+				const img = imgLinks[i];
+				console.log(img);
+				form[URLinput].value = img;
+			});
+		});
+	}, 2500);
 }
 
 //get DATA for index
 const getIndexImages = async (collection, document) => {
-  try {
-    const indexImages = doc(db, collection, document);
-    const imgSnap = await getDoc(indexImages);
-    const data = imgSnap.data();
-    return data;
-  } catch (err) {
-    throw new Error("get cambridge price", err);
-  }
+	try {
+		const indexImages = doc(db, collection, document);
+		const imgSnap = await getDoc(indexImages);
+		const data = imgSnap.data();
+		return data;
+	} catch (err) {
+		throw new Error('get cambridge price', err);
+	}
 };
 
-export const indexImagesDB = await getIndexImages("index", "indexImages");
+export const indexImagesDB = await getIndexImages('index', 'indexImages');
 
 //get docs in a collection
 const getLineas = async (category) => {
-  try {
-    const querySNAP = await getDocs(collection(db, category));
-    querySNAP.forEach((linea) => {
-      // console.log(linea.data());
-    });
-    return querySNAP;
-  } catch (err) {
-    throw new Error("get lineas", err);
-  }
+	try {
+		const querySNAP = await getDocs(collection(db, category));
+		querySNAP.forEach((linea) => {
+			// console.log(linea.data());
+		});
+		return querySNAP;
+	} catch (err) {
+		throw new Error('get lineas', err);
+	}
 };
 
 //get LINEA
-export const lineasMujer = await getLineas("mujer");
+export const lineasMujer = await getLineas('mujer');
+export const lineasHombre = await getLineas('hombre');
 
 //GET DATA for MUJER
 
