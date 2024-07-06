@@ -19,7 +19,13 @@ import {
 	deleteDoc,
 	updateDoc,
 } from 'https://www.gstatic.com/firebasejs/10.12.3/firebase-firestore.js';
-
+import {
+	getAuth,
+	GoogleAuthProvider,
+	signInWithPopup,
+	signOut,
+	onAuthStateChanged,
+} from 'https://www.gstatic.com/firebasejs/10.12.3/firebase-auth.js';
 const firebaseConfig = {
 	apiKey: 'AIzaSyBroVNx30DfKRGO1yBedvg4cwTnNQeNkqs',
 	authDomain: 'verano25-fc8ff.firebaseapp.com',
@@ -33,6 +39,50 @@ const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 const storage = getStorage();
 const storageRef = ref(storage);
+const provider = new GoogleAuthProvider();
+const auth = getAuth(app);
+
+const login = document.getElementById('googleLogIn');
+const logout = document.getElementById('googleLogOut');
+
+let user;
+let prevUser;
+console.log(user);
+onAuthStateChanged(auth, (user) => {
+	if (user != null) {
+		console.log('User Logged In');
+		prevUser = user;
+		login.classList.toggle('display-none');
+
+		console.log(user);
+	} else {
+		console.log('No User Logged In');
+		login.classList.toggle('display-none');
+	}
+});
+if (login && logout) {
+	login.addEventListener('click', async () => {
+		signInWithPopup(auth, provider)
+			.then((result) => {
+				user = result.user;
+				console.log(user);
+			})
+			.catch((error) => {
+				const errorCode = error.code;
+				console.log(errorCode);
+				console.log(error);
+			});
+	});
+	logout.addEventListener('click', () => {
+		signOut(auth)
+			.then(() => {
+				console.log('Signed Out succesfully');
+			})
+			.catch((error) => {
+				console.log('We couldn´t sign you Out', error);
+			});
+	});
+}
 
 //UPLOAD IMAGES
 const uploadImages = async (HtMLform, fileInput, DBdirectory) => {
