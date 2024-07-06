@@ -34,59 +34,70 @@ const db = getFirestore(app);
 const storage = getStorage();
 const storageRef = ref(storage);
 
-//UPLOAD INDEX IMG
-const indexForm = document.getElementById("indexForm");
-if (indexForm) {
-  indexForm.addEventListener("submit", (e) => {
-    e.preventDefault();
-    console.log("hola");
-    const file = document.getElementById("indexImgs").files;
-    console.log(file.length);
-    for (let i = 0; i < file.length; i++) {
-      const fileRef = ref(storage, `index/${file[i].name}`);
-      uploadBytes(fileRef, file[i])
-        .then((snapshot) => {
-          console.log("Uploaded a blob or file!");
-        })
-        .catch((error) => {
-          console.log("Upload failed:", error);
-        });
-    }
-  });
-}
-const listRef = ref(storage, "index");
-const indexImages = document.getElementById("indexImages");
-const showIndexImages = document.getElementById("showIndexImages");
-const imgIndexLinks = [];
-if (showIndexImages) {
-  showIndexImages.addEventListener("click", async () => {
-    listAll(listRef)
-      .then((res) => {
-        res.items.forEach((itemRef, i) => {
-          console.log(itemRef);
-          getDownloadURL(ref(storage, `index/${itemRef.name}`))
-            .then((url) => {
-              imgIndexLinks.push(url);
-              indexImages.innerHTML += `
-          <div>
-            <img src=${url} style="width: 200px;" class="mb-3" id=${itemRef.name}>
-            <button id=index-${itemRef.name} class="btn btn-primary ms-2 img-use-button">Usar</button>
-          </div>
-          `;
-            })
-            .catch((err) => {
-              console.log(err);
-            });
-        });
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-    useImageButtons();
-  });
-}
+//UPLOAD IMAGES
+const uploadImages = async (HtMLform, fileInput, DBdirectory) => {
+  const formU = document.getElementById(`${HtMLform}`);
 
-//USAR IMAGENES
+  if (formU) {
+    formU.addEventListener("submit", (e) => {
+      e.preventDefault();
+      const file = document.getElementById(`${fileInput}`).files;
+      for (let i = 0; i < file.length; i++) {
+        const fileRef = ref(storage, `${DBdirectory}/${file[i].name}`);
+        uploadBytes(fileRef, file[i])
+          .then((snapshot) => {
+            console.log(`Uploaded for ${DBdirectory}!`);
+          })
+          .catch((error) => {
+            console.log("Upload failed:", error);
+          });
+      }
+    });
+  }
+};
+//UPLOAD IMAGES END
+
+// Activar UPLOAD IMAGES para cada formulario
+uploadImages("indexForm", "indexImgs", "index");
+uploadImages("mujerImgForm", "lineasMujerImgs", "lineasMujer");
+
+//LIST IMAGES
+const imgLinks = [];
+
+const showImages = (DBdirectory, imgsContainer, button, URLinput, form) => {
+  const listRef = ref(storage, `${DBdirectory}`);
+  const HTMLimgsContainer = document.getElementById(`${imgsContainer}`);
+  const showImgsButton = document.getElementById(`${button}`);
+  if (showImgsButton) {
+    showImgsButton.addEventListener("click", async () => {
+      listAll(listRef)
+        .then((res) => {
+          res.items.forEach((itemRef) => {
+            getDownloadURL(ref(storage, `${DBdirectory}/${itemRef.name}`))
+              .then((url) => {
+                imgLinks.push(url);
+                HTMLimgsContainer.innerHTML += `
+             <div>
+              <img src=${url} style="width: 200px;" class="mb-3" id=${itemRef.name}>
+              <button id=index-${itemRef.name} class="btn btn-primary ms-2 ${DBdirectory}" disabled>Usar</button>
+            </div>
+      `;
+              })
+              .catch((err) => {
+                console.log(err);
+              });
+          });
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+      useImageButtons(DBdirectory, form, URLinput);
+      console.log(imgLinks);
+    });
+  }
+};
+
+//USAR IMAGENES y cargar por Formulario
 
 const useIndexImgs = document.getElementById("useIndexImgs");
 if (useIndexImgs) {
@@ -109,94 +120,105 @@ if (useIndexImgs) {
   });
 }
 
-async function useImageButtons() {
+const useLineasMujerImgs = document.getElementById("useLineasMujerImgs");
+if (useLineasMujerImgs) {
+  useLineasMujerImgs.addEventListener("submit", async (e) => {
+    e.preventDefault();
+    let lineaMujerImage = {};
+    const data = {
+      linea: useLineasMujerImgs["lineaMujer"].value.toLowerCase(),
+      data: {
+        data: {
+          descripcion:
+            useLineasMujerImgs["lineaMujerDescipcion"].value.toLowerCase(),
+          fondo: useLineasMujerImgs["lineaMujerFondo"].value.toLowerCase(),
+          numeracion: [
+            useLineasMujerImgs["lineaMujerNumeracionMin"].value,
+            useLineasMujerImgs["lineaMujerNumeracionMax"].value,
+          ],
+          url: useLineasMujerImgs["lineaMujerURL"].value,
+          linea: useLineasMujerImgs["lineaMujer"].value.toLowerCase(),
+        },
+      },
+    };
+    try {
+      await setDoc(doc(db, "mujer", data.linea), data.data, { merge: true });
+      console.log("OK! agregando linea");
+    } catch (err) {
+      throw new Error("set Category Image", err);
+    }
+  });
+}
+
+showImages(
+  "index",
+  "indexImages",
+  "showIndexImages",
+  "indexImage",
+  useIndexImgs
+);
+showImages(
+  "lineasMujer",
+  "lineasMujerImages",
+  "showLineasMujerImages",
+  "lineaMujerURL",
+  useLineasMujerImgs
+);
+async function useImageButtons(DBdirectory, form, URLinput) {
   setTimeout(() => {
-    const use = document.querySelectorAll(".img-use-button");
+    const use = document.querySelectorAll(`.${DBdirectory}`);
     console.log(use);
     use.forEach((button, i) => {
+      button.removeAttribute("disabled");
       button.addEventListener("click", (event) => {
-        const img = imgIndexLinks[i];
+        const img = imgLinks[i];
         console.log(img);
-        useIndexImgs["indexImage"].value = img;
+        form[URLinput].value = img;
       });
     });
   }, 2500);
 }
 
 //get DATA for index
-const getIndexImages = async () => {
+const getIndexImages = async (collection, document) => {
   try {
-    const indexImages = doc(db, "index", "indexImages");
+    const indexImages = doc(db, collection, document);
     const imgSnap = await getDoc(indexImages);
-    const newIndexImages = imgSnap.data();
-    return newIndexImages;
+    const data = imgSnap.data();
+    return data;
   } catch (err) {
     throw new Error("get cambridge price", err);
   }
 };
 
-export const indexImagesDB = await getIndexImages();
+export const indexImagesDB = await getIndexImages("index", "indexImages");
 
-//ADD DATA for MUJER LINEAS
-const linea = {
-  linea: "birk",
-  data: {
-    data: {
-      descripcion:
-        "Lorem ipsum dolor sit amet consectetur adipisicing elit. Esse molestiae dolore quae dolores error excepturi quaerat, accusamus nihil sit assumenda deserunt nulla consectetur voluptatum odio adipisci sunt hic. Debitis, dolorum!",
-      fondo: "pu",
-      numeracion: ["35", "41"],
-      url: "urll",
-    },
-  },
-};
-
-const addLineaMujer = async () => {
+//get docs in a collection
+const getLineas = async (category) => {
   try {
-    await setDoc(doc(db, "mujer", `${linea.linea}`), linea.data, {
-      merge: true,
+    const querySNAP = await getDocs(collection(db, category));
+    querySNAP.forEach((linea) => {
+      // console.log(linea.data());
     });
+    return querySNAP;
   } catch (err) {
-    console.log(err, "cargar linea mujer");
+    throw new Error("get lineas", err);
   }
 };
+
+//get LINEA
+export const lineasMujer = await getLineas("mujer");
 
 //GET DATA for MUJER
-const getCatalogoMujer = async () => {
-  try {
-    const catalogoMujer = doc(db, "mujer", "relax");
-    const catalogoMujerSNAP = await getDoc(catalogoMujer);
-    const catalogo = catalogoMujerSNAP.data();
-    console.log(catalogo);
-  } catch (err) {
-    console.log(err, "get catalogo");
-  }
-};
 
-const relaxUpdate = {
-  2000: "segundo",
-};
-
-const updateCatalogo = async () => {
-  try {
-    await updateDoc(doc(db, "mujer", "relax"), relaxUpdate);
-    console.log("relax updated or.... deleted.. or rewritten");
-  } catch (err) {
-    console.log(err);
-  }
-};
-// await getCatalogoMujer();
-// await updateCatalogo();
-// await getCatalogoMujer();
-
-const buscar = async () => {
-  try {
-    const modeloRef = doc(db, "mujer", "relax");
-    const querySNAP = await getDoc(modeloRef);
-    const data = querySNAP.data();
-    console.log(data[2006]);
-  } catch (err) {
-    console.log(err, "query");
-  }
-};
-await buscar();
+// const buscar = async () => {
+//   try {
+//     const modeloRef = doc(db, "mujer", "relax");
+//     const querySNAP = await getDoc(modeloRef);
+//     const data = querySNAP.data();
+//     console.log(data[2006]);
+//   } catch (err) {
+//     console.log(err, "query");
+//   }
+// };
+// await buscar();

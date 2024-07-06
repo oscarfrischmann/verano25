@@ -5,7 +5,7 @@ for (let key in await indexImagesDB) {
   console.log(indexImagesDB[key]);
   categoriesCont.innerHTML += `
       <div class="col-sm p-2 position-relative">
-        <img src=${indexImagesDB[key]} id="img">
+        <img src=${indexImagesDB[key]} id="img" onload>
         <button class="main-type-title" id="mujer">${key}</button>
       </div>
     `;
