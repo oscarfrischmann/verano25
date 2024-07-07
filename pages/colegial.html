@@ -11,7 +11,7 @@
 </head>
 
 <body>
-  <header class="container-fuid">
+  <header class="container-fuid ">
     <nav class="navbar navbar-expand-lg bg-body-tertiary" style="background-color: #e3f2fd;">
       <div class="container">
         <a class="navbar-brand" href="../index.html">
@@ -42,6 +42,46 @@
   </header>
   <main>
     <h2 class="text-center fs-1 m-5 text-uppercase">colegial</h2>
+    <seccion class="container d-flex flex-md-row justify-content-center flex-column align-items-center">
+      <div class="card shadow d-md-none" style="width: 18rem;">
+        <img src="../img/02.jpg" class="card-img-top" alt="...">
+        <img src="../img/02.jpg" class="card-img-bottom" alt="...">
+        <div class="card-body">
+          <h5 class="card-title">Art. 2021</h5>
+        </div>
+      </div>
+      <!-- Button trigger modal -->
+      <div class="card shadow d-md-block d-none" style="width: 18rem;">
+        <img src="../img/02.jpg" class="card-img-top" alt="...">
+        <div class="card-body">
+          <h5 class="card-title">Art. 2021</h5>
+          <button type="button" class="btn btn-primary d-md-block d-none" data-bs-toggle="modal"
+            data-bs-target="#staticBackdrop">
+            Ver más
+        </div>
+      </div>
+      <!-- Modal -->
+      <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+        aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered modal-xl">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h2 class="modal-title fs-5" id="staticBackdropLabel">Art. 2021</h2>
+
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <img src="../img/02.jpg" class="card-img-top rounded mb-2" alt="...">
+              <img src="../img/02.jpg" class="card-img-bottom rounded" alt="...">
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+              <button type="button" class="btn btn-primary">Preguntale más a Santi</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </seccion>
   </main>
   <footer
     class="grid d-flex flex-column flex-md-row justify-content-center align-items-center mt-5 bg-success-subtle bg-gradient">
