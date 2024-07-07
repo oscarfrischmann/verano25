@@ -11,7 +11,7 @@ lineas.forEach((linea) => {
 	loader.style.display = 'none';
 	console.log(linea.data());
 	lineasContainer.innerHTML += `
-    <div class="card m-4 shadow" style="width: 18rem;">
+    <div class="card m-4 shadow mt-0" style="width: 18rem;">
       <img src="${linea.data().data.url}" class="card-img-top" alt="...">
       <div class="card-body">
         <h5 class="card-title text-uppercase">${linea.data().data.linea}</h5>
