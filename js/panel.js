@@ -47,19 +47,21 @@ const logout = document.getElementById('googleLogOut');
 
 let user;
 let prevUser;
-console.log(user);
-onAuthStateChanged(auth, (user) => {
-	if (user != null) {
-		console.log('User Logged In');
-		prevUser = user;
-		login.classList.toggle('display-none');
+if (login) {
+	onAuthStateChanged(auth, (user) => {
+		if (user != null) {
+			console.log('User Logged In');
+			console.log(user);
+			prevUser = user;
+			login.classList.toggle('display-none');
 
-		console.log(user);
-	} else {
-		console.log('No User Logged In');
-		login.classList.toggle('display-none');
-	}
-});
+			console.log(user);
+		} else {
+			console.log('No User Logged In');
+			login.classList.toggle('display-none');
+		}
+	});
+}
 if (login && logout) {
 	login.addEventListener('click', async () => {
 		signInWithPopup(auth, provider)

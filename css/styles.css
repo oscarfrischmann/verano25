@@ -97,10 +97,10 @@
   text-transform: capitalize;
 }
 
-.main-first h2 {
 
+
+.main-first h2 {
   position: absolute;
-  font-size: 3.5rem;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
@@ -124,7 +124,6 @@
 
 .flowers-cont {
   height: 500px;
-  width: 100vw;
   overflow: hidden;
 }
 
@@ -135,5 +134,9 @@
 @media (width > 768px) {
   .main-type-img img {
     width: 400px;
+  }
+
+  footer img {
+    max-height: 200px;
   }
 }
