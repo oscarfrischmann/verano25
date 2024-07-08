@@ -49,16 +49,18 @@ let user;
 let prevUser;
 if (login) {
 	onAuthStateChanged(auth, (user) => {
+		const laodPage = document.getElementById('mainPanel');
 		if (user != null) {
 			console.log('User Logged In');
+			laodPage.classList.remove('d-none');
 			// console.log(user);
 			prevUser = user;
 			login.classList.toggle('display-none');
 
 			// console.log(user);
 		} else {
+			laodPage.classList.add('d-none');
 			console.log('No User Logged In');
-			login.classList.toggle('display-none');
 		}
 	});
 }
