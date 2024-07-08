@@ -98,7 +98,7 @@ const uploadImages = async (HtMLform, fileInput, DBdirectory) => {
 				const fileRef = ref(storage, `${DBdirectory}/${file[i].name}`);
 				uploadBytes(fileRef, file[i])
 					.then((snapshot) => {
-						console.log(`Uploaded for ${DBdirectory}!`);
+						alert(`Uploaded for ${DBdirectory}!`);
 					})
 					.catch((error) => {
 						console.log('Upload failed:', error);
@@ -166,7 +166,7 @@ if (useIndexImgs) {
 
 		try {
 			await updateDoc(doc(db, 'index', 'indexImages'), indexImage);
-			console.log('OK!');
+			alert('OK!');
 		} catch (err) {
 			throw new Error('set Category Image', err);
 		}
@@ -192,10 +192,22 @@ if (useLineasMujerImgs) {
 					linea: useLineasMujerImgs['lineaMujer'].value.toLowerCase(),
 				},
 			},
+			articulo: {
+				articulo: {
+					art: useLineasMujerImgs['artMujerURL'].value,
+					url: useLineasMujerImgs['lineaMujerURL'].value,
+				},
+			},
 		};
 		try {
-			await setDoc(doc(db, 'mujer', data.linea), data.data, { merge: true });
-			console.log('OK! agregando linea MUJER');
+			if (!data.articulo.articulo.art) {
+				await setDoc(doc(db, 'mujer', data.linea), data.data, { merge: true });
+				alert('OK! agregando linea MUJER');
+			} else {
+				const newArticle = { [data.articulo.articulo.art]: data.articulo.articulo.url };
+				await setDoc(doc(db, 'mujer', data.linea), newArticle, { merge: true });
+				alert('OK! agregando articulo MUJER');
+			}
 		} catch (err) {
 			throw new Error('set Category Image', err);
 		}
@@ -230,11 +242,11 @@ if (useLineasHombreImgs) {
 		try {
 			if (!data.articulo.articulo.art) {
 				await setDoc(doc(db, 'hombre', data.linea), data.data, { merge: true });
-				console.log('OK! agregando linea HOMBRE');
+				alert('OK! agregando linea HOMBRE');
 			} else {
 				const newArticle = { [data.articulo.articulo.art]: data.articulo.articulo.url };
 				await setDoc(doc(db, 'hombre', data.linea), newArticle, { merge: true });
-				console.log('OK! agregando articulo HOMBRE');
+				alert('OK! agregando articulo HOMBRE');
 			}
 		} catch (err) {
 			throw new Error('set Category Image', err);

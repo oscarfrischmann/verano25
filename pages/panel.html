@@ -76,7 +76,7 @@
       </div>
     </section>
     <section class="container mujer-lineas mt-5 border border-5 p-4">
-      <h2 class="m-5">Cargar Líneas de mujer</h2>
+      <h2 class="m-5">Mujer</h2>
       <form id="mujerImgForm" enctype="multipart/form-data" class="">
         <div class="mb-3 d-flex">
           <input class="form-control" style="max-width: 500px;" type="file" id="lineasMujerImgs" multiple>
@@ -87,34 +87,47 @@
         <button type="button" id="showLineasMujerImages" class="btn btn-primary m-5">Ver imágenes</button>
         <div id="lineasMujerImages" class="container d-flex"></div>
       </div>
-      <div class="container">
-        <form action="" class="container" id="useLineasMujerImgs">
+      <div class="container grid row">
+        <div class="col-6">
+          <h3>Cagar Líneas</h3>
+          <form action="" class="container" id="useLineasMujerImgs">
+            <div class="mb-3">
+              <label for="lineaMujer" class="form-label">Línea</label>
+              <input type="text" class="form-control" id="lineaMujer" name="lineaMujer">
+            </div>
+            <div class="mb-3">
+              <label for="lineaMujerDescipcion" class="form-label">Descripción</label>
+              <input type="text" class="form-control" name="lineaMujerDescipcion" id="lineaMujerDescipcion">
+            </div>
+            <div class="mb-3">
+              <label for="lineaMujerFondo" class="form-label">Tipo de fondo</label>
+              <input type="text" class="form-control" name="lineaMujerFondo" id="lineaMujerFondo"
+                placeholder="PU / TR / otro">
+            </div>
+            <div class="mb-3 d-flex gap-4 align-items-center">
+              <label for="lineaMujerNumeracionMin" class="form-label">Numeración: del</label>
+              <input type="text" class="form-control" name="lineaMujerNumeracionMin" id="lineaMujerNumeracionMin"
+                style="width: 50px !important;">
+              <label for="lineaMujerNumeracionMax" class="form-label">al</label>
+              <input type="text" class="form-control" name="lineaMujerNumeracionMax" id="lineaMujerNumeracionMax"
+                style="width: 50px !important;">
+            </div>
+            <div class="mb-3">
+              <label for="lineaMujerURL" class="form-label">URL imágen principal</label>
+              <input type="text" class="form-control" name="lineaMujerURL" id="lineaMujerURL" placeholder="">
+            </div>
+        </div>
+        <div class="col-6">
+          <h3>Cargar Artículos</h3>
           <div class="mb-3">
-            <label for="lineaMujer" class="form-label">Línea</label>
-            <input type="text" class="form-control" id="lineaMujer" name="lineaMujer">
+            <label for="artMujerURL" class="form-label">Artículo</label>
+            <input type="text" class="form-control" name="artMujerURL" id="artMujerURL" placeholder="">
           </div>
-          <div class="mb-3">
-            <label for="lineaMujerDescipcion" class="form-label">Descripción</label>
-            <input type="text" class="form-control" name="lineaMujerDescipcion" id="lineaMujerDescipcion">
-          </div>
-          <div class="mb-3">
-            <label for="lineaMujerFondo" class="form-label">Tipo de fondo</label>
-            <input type="text" class="form-control" name="lineaMujerFondo" id="lineaMujerFondo"
-              placeholder="PU / TR / otro">
-          </div>
-          <div class="mb-3 d-flex gap-4 align-items-center">
-            <label for="lineaMujerNumeracionMin" class="form-label">Numeración: del</label>
-            <input type="text" class="form-control" name="lineaMujerNumeracionMin" id="lineaMujerNumeracionMin"
-              style="width: 50px !important;">
-            <label for="lineaMujerNumeracionMax" class="form-label">al</label>
-            <input type="text" class="form-control" name="lineaMujerNumeracionMax" id="lineaMujerNumeracionMax"
-              style="width: 50px !important;">
-          </div>
-          <div class="mb-3">
-            <label for="lineaMujerURL" class="form-label">URL imágen principal</label>
-            <input type="text" class="form-control" name="lineaMujerURL" id="lineaMujerURL" placeholder="">
-          </div>
-          <button type="submit" class="btn btn-primary">Cargar</button>
+        </div>
+        <div>
+          <button type="submit" class="btn btn-primary ">Cargar</button>
+          <button type="reset" class="btn btn-danger">Borrar</button>
+        </div>
         </form>
       </div>
     </section>
