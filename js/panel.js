@@ -51,11 +51,11 @@ if (login) {
 	onAuthStateChanged(auth, (user) => {
 		if (user != null) {
 			console.log('User Logged In');
-			console.log(user);
+			// console.log(user);
 			prevUser = user;
 			login.classList.toggle('display-none');
 
-			console.log(user);
+			// console.log(user);
 		} else {
 			console.log('No User Logged In');
 			login.classList.toggle('display-none');
@@ -67,7 +67,7 @@ if (login && logout) {
 		signInWithPopup(auth, provider)
 			.then((result) => {
 				user = result.user;
-				console.log(user);
+				// console.log(user);
 			})
 			.catch((error) => {
 				const errorCode = error.code;
@@ -220,10 +220,22 @@ if (useLineasHombreImgs) {
 					linea: useLineasHombreImgs['lineaHombre'].value.toLowerCase(),
 				},
 			},
+			articulo: {
+				articulo: {
+					art: useLineasHombreImgs['artHombreURL'].value,
+					url: useLineasHombreImgs['lineaHombreURL'].value,
+				},
+			},
 		};
 		try {
-			await setDoc(doc(db, 'hombre', data.linea), data.data, { merge: true });
-			console.log('OK! agregando linea HOMBRE');
+			if (!data.articulo.articulo.art) {
+				await setDoc(doc(db, 'hombre', data.linea), data.data, { merge: true });
+				console.log('OK! agregando linea HOMBRE');
+			} else {
+				const newArticle = { [data.articulo.articulo.art]: data.articulo.articulo.url };
+				await setDoc(doc(db, 'hombre', data.linea), newArticle, { merge: true });
+				console.log('OK! agregando articulo HOMBRE');
+			}
 		} catch (err) {
 			throw new Error('set Category Image', err);
 		}

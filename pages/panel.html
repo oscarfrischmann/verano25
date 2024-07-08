@@ -119,7 +119,7 @@
       </div>
     </section>
     <section class="container hombre-lineas mt-5 border border-5 p-4">
-      <h2 class="m-5">Cargar Líneas de Hombre</h2>
+      <h2 class="m-5">Hombre</h2>
       <form id="hombreImgForm" enctype="multipart/form-data" class="">
         <div class="mb-3 d-flex">
           <input class="form-control" style="max-width: 500px;" type="file" id="lineasHombreImgs" multiple>
@@ -130,34 +130,47 @@
         <button type="button" id="showLineasHombreImages" class="btn btn-primary m-5">Ver imágenes</button>
         <div id="lineasHombreImages" class="container d-flex"></div>
       </div>
-      <div class="container">
-        <form action="" class="container" id="useLineasHombreImgs">
+      <div class="container grid row">
+        <div class="col-6">
+          <h3>Cargar Líneas</h3>
+          <form action="" class="container" id="useLineasHombreImgs">
+            <div class="mb-3">
+              <label for="lineaHombre" class="form-label">Línea</label>
+              <input type="text" class="form-control" id="lineaHombre" name="lineaHombre">
+            </div>
+            <div class="mb-3">
+              <label for="lineaHombreDescipcion" class="form-label">Descripción</label>
+              <input type="text" class="form-control" name="lineaHombreDescipcion" id="lineaHombreDescipcion">
+            </div>
+            <div class="mb-3">
+              <label for="lineaHombreFondo" class="form-label">Tipo de fondo</label>
+              <input type="text" class="form-control" name="lineaHombreFondo" id="lineaHombreFondo"
+                placeholder="PU / TR / otro">
+            </div>
+            <div class="mb-3 d-flex gap-4 align-items-center">
+              <label for="lineaHombreNumeracionMin" class="form-label">Numeración: del</label>
+              <input type="text" class="form-control" name="lineaHombreNumeracionMin" id="lineaHombreNumeracionMin"
+                style="width: 50px !important;">
+              <label for="lineaHombreNumeracionMax" class="form-label">al</label>
+              <input type="text" class="form-control" name="lineaHombreNumeracionMax" id="lineaHombreNumeracionMax"
+                style="width: 50px !important;">
+            </div>
+            <div class="mb-3">
+              <label for="lineaHombreURL" class="form-label">URL imágen principal</label>
+              <input type="text" class="form-control" name="lineaHombreURL" id="lineaHombreURL" placeholder="">
+            </div>
+        </div>
+        <div class="col-6">
+          <h3>Cargar Artículos</h3>
           <div class="mb-3">
-            <label for="lineaHombre" class="form-label">Línea</label>
-            <input type="text" class="form-control" id="lineaHombre" name="lineaHombre">
+            <label for="artHombreURL" class="form-label">Artículo</label>
+            <input type="text" class="form-control" name="artHombreURL" id="artHombreURL" placeholder="">
           </div>
-          <div class="mb-3">
-            <label for="lineaHombreDescipcion" class="form-label">Descripción</label>
-            <input type="text" class="form-control" name="lineaHombreDescipcion" id="lineaHombreDescipcion">
-          </div>
-          <div class="mb-3">
-            <label for="lineaHombreFondo" class="form-label">Tipo de fondo</label>
-            <input type="text" class="form-control" name="lineaHombreFondo" id="lineaHombreFondo"
-              placeholder="PU / TR / otro">
-          </div>
-          <div class="mb-3 d-flex gap-4 align-items-center">
-            <label for="lineaHombreNumeracionMin" class="form-label">Numeración: del</label>
-            <input type="text" class="form-control" name="lineaHombreNumeracionMin" id="lineaHombreNumeracionMin"
-              style="width: 50px !important;">
-            <label for="lineaHombreNumeracionMax" class="form-label">al</label>
-            <input type="text" class="form-control" name="lineaHombreNumeracionMax" id="lineaHombreNumeracionMax"
-              style="width: 50px !important;">
-          </div>
-          <div class="mb-3">
-            <label for="lineaHombreURL" class="form-label">URL imágen principal</label>
-            <input type="text" class="form-control" name="lineaHombreURL" id="lineaHombreURL" placeholder="">
-          </div>
-          <button type="submit" class="btn btn-primary">Cargar</button>
+        </div>
+        <div>
+          <button type="submit" class="btn btn-primary ">Cargar</button>
+          <button type="reset" class="btn btn-danger">Borrar</button>
+        </div>
         </form>
       </div>
     </section>

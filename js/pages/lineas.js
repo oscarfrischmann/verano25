@@ -16,7 +16,10 @@ lineas.forEach((linea) => {
       <div class="card-body">
         <h5 class="card-title text-uppercase">${linea.data().data.linea}</h5>
         <p class="card-text lead">${linea.data().data.descripcion}</p>
-        <a href="#" class="btn btn-primary">Ver <span class="text-uppercase">${linea.data().data.linea}</span> </a>
+        <a href="./linea.html?linea=${
+					linea.data().data.linea
+				}" class="btn btn-primary">Ver <span class="text-uppercase">${linea.data().data.linea}</span>
+        </a>
       </div>
     </div>
   `;
