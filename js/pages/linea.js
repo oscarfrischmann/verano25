@@ -11,7 +11,6 @@ let currentLinea;
 console.log(lineaC, category);
 
 const lineaTitle = document.getElementById('lineaTitle');
-lineaTitle.textContent = `Línea ${lineaC}`;
 category === 'mujer' ? (lineaCollection = lineasMujer) : (lineaCollection = lineasHombre);
 console.log(lineaCollection);
 lineaCollection.forEach((linea) => {
@@ -19,6 +18,12 @@ lineaCollection.forEach((linea) => {
 	if (linea.data().data.linea === lineaC) currentLinea = linea.data();
 });
 console.log(currentLinea);
+console.log(currentLinea.data);
+lineaTitle.innerHTML = `
+      <h2>Linea ${lineaC}</h2>
+      <h4>Fondo ${currentLinea.data.fondo}</h4>
+      <h4>${currentLinea.data.numeracion[0]} / ${currentLinea.data.numeracion[1]}</h4>  
+`;
 
 for (let [art, url] of Object.entries(currentLinea)) {
 	const loader = document.getElementById('loader');
@@ -32,11 +37,11 @@ for (let [art, url] of Object.entries(currentLinea)) {
 		console.log(images);
 		const urlList = images.map((url) => `<img class="card-img" src=${url}>`).join('');
 		lineaContainer.innerHTML += `
-      <div class="card shadow d-md-none" style="width: 18rem;">
+      <div class="card shadow d-md-none mb-3" style="width: 18rem;">
+      <div class="card-body">
+        <h5 class="card-title">Art. ${art}</h5>
+      </div>
         ${urlList}
-        <div class="card-body">
-          <h5 class="card-title">Art. ${art}</h5>
-        </div>
       </div>
       <div class="card shadow d-md-block d-none ms-1 me-1" style="width: 18rem;">
         <img src="${url}" class="card-img-top" alt="...">
