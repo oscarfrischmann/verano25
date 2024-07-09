@@ -201,15 +201,33 @@ if (useLineasMujerImgs) {
 			},
 		};
 		try {
+			let newImg;
 			if (!data.articulo.articulo.art) {
 				await setDoc(doc(db, 'mujer', data.linea), data.data, { merge: true });
 				alert('OK! agregando linea MUJER');
 			} else {
-				const newArticle = {
-					[data.articulo.articulo.art]: data.articulo.articulo.url,
-				};
-				await setDoc(doc(db, 'mujer', data.linea), newArticle, { merge: true });
-				alert('OK! agregando articulo MUJER');
+				console.log('else');
+				const artRef = await getDoc(doc(db, 'mujer', data.linea));
+				console.log(artRef.data());
+
+				if (artRef.data().hasOwnProperty(data.articulo.articulo.art)) {
+					console.log(artRef.data()[data.articulo.articulo.art]);
+					newImg = artRef.data()[data.articulo.articulo.art];
+					newImg.push(data.articulo.articulo.url);
+					const addImg = {
+						[data.articulo.articulo.art]: newImg,
+					};
+					await setDoc(doc(db, 'mujer', data.linea), addImg, { merge: true });
+					alert(`OK! nueva imagen agregnda a art ${data.articulo.articulo.art}`);
+				} else {
+					const newArticle = {
+						[data.articulo.articulo.art]: [data.articulo.articulo.url],
+					};
+					await setDoc(doc(db, 'mujer', data.linea), newArticle, {
+						merge: true,
+					});
+					alert(`OK! articulo ${data.articulo.articulo.art} MUJER agregado`);
+				}
 			}
 		} catch (err) {
 			throw new Error('set Category Image', err);

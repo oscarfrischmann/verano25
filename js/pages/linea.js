@@ -1,6 +1,8 @@
 import { lineasHombre } from '../panel.js';
 import { lineasMujer } from '../panel.js';
 
+console.log(lineasHombre);
+console.log(lineasMujer);
 const lineaContainer = document.getElementById('lineaContainer');
 const queryString = window.location.search;
 const params = new URLSearchParams(queryString);
