@@ -201,20 +201,22 @@ if (useLineasMujerImgs) {
 			},
 		};
 		try {
-			let newImg;
+			let newImgMujer;
 			if (!data.articulo.articulo.art) {
 				await setDoc(doc(db, 'mujer', data.linea), data.data, { merge: true });
-				alert('OK! agregando linea MUJER');
+				alert('OK! agregando linea mujer');
 			} else {
 				console.log('else');
 				const artRef = await getDoc(doc(db, 'mujer', data.linea));
 				console.log(artRef.data());
 				if (artRef.data().hasOwnProperty(data.articulo.articulo.art)) {
 					console.log(artRef.data()[data.articulo.articulo.art]);
-					newImg = artRef.data()[data.articulo.articulo.art];
-					newImg.push(data.articulo.articulo.url);
+					newImgMujer = artRef.data()[data.articulo.articulo.art];
+					console.log(newImgMujer);
+					newImgMujer.push(data.articulo.articulo.url);
+					console.log(newImgMujer);
 					const addImg = {
-						[data.articulo.articulo.art]: newImg,
+						[data.articulo.articulo.art]: newImgMujer,
 					};
 					await setDoc(doc(db, 'mujer', data.linea), addImg, { merge: true });
 					alert(`OK! nueva imagen agregnda a art ${data.articulo.articulo.art}`);
@@ -225,7 +227,7 @@ if (useLineasMujerImgs) {
 					await setDoc(doc(db, 'mujer', data.linea), newArticle, {
 						merge: true,
 					});
-					alert(`OK! articulo ${data.articulo.articulo.art} MUJER agregado`);
+					alert(`OK! articulo ${data.articulo.articulo.art} mujer agregado`);
 				}
 			}
 		} catch (err) {
@@ -271,6 +273,7 @@ if (useLineasHombreImgs) {
 				if (artRef.data().hasOwnProperty(data.articulo.articulo.art)) {
 					console.log(artRef.data()[data.articulo.articulo.art]);
 					newImg = artRef.data()[data.articulo.articulo.art];
+					console.log(newImg);
 					newImg.push(data.articulo.articulo.url);
 					const addImg = {
 						[data.articulo.articulo.art]: newImg,
@@ -342,7 +345,7 @@ const getLineas = async (category) => {
 //get LINEA
 export const lineasMujer = await getLineas('mujer');
 export const lineasHombre = await getLineas('hombre');
-
+lineasMujer.forEach((linea) => console.log(linea.data()));
 //GET DATA for MUJER
 
 // const buscar = async () => {

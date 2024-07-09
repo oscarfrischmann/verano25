@@ -1,8 +1,6 @@
 import { lineasHombre } from '../panel.js';
 import { lineasMujer } from '../panel.js';
 
-console.log(lineasHombre);
-console.log(lineasMujer);
 const lineaContainer = document.getElementById('lineaContainer');
 const queryString = window.location.search;
 const params = new URLSearchParams(queryString);
@@ -14,9 +12,10 @@ console.log(lineaC, category);
 
 const lineaTitle = document.getElementById('lineaTitle');
 lineaTitle.textContent = `Línea ${lineaC}`;
-lineaC === 'mujer' ? (lineaCollection = lineasMujer) : (lineaCollection = lineasHombre);
-
+category === 'mujer' ? (lineaCollection = lineasMujer) : (lineaCollection = lineasHombre);
+console.log(lineaCollection);
 lineaCollection.forEach((linea) => {
+	console.log(linea.data());
 	if (linea.data().data.linea === lineaC) currentLinea = linea.data();
 });
 console.log(currentLinea);
