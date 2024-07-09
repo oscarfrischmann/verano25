@@ -10,6 +10,8 @@ let lineaCollection;
 let currentLinea;
 console.log(lineaC, category);
 
+const lineaTitle = document.getElementById('lineaTitle');
+lineaTitle.textContent = `Línea ${lineaC}`;
 lineaC === 'mujer' ? (lineaCollection = lineasMujer) : (lineaCollection = lineasHombre);
 
 lineaCollection.forEach((linea) => {
@@ -35,7 +37,7 @@ for (let [art, url] of Object.entries(currentLinea)) {
           <h5 class="card-title">Art. ${art}</h5>
         </div>
       </div>
-      <div class="card shadow d-md-block d-none" style="width: 18rem;">
+      <div class="card shadow d-md-block d-none ms-1 me-1" style="width: 18rem;">
         <img src="${url}" class="card-img-top" alt="...">
         <div class="card-body">
           <h5 class="card-title">Art. ${art}</h5>
@@ -47,7 +49,7 @@ for (let [art, url] of Object.entries(currentLinea)) {
       <!-- Modal -->
       <div class="modal fade" id="staticBackdrop${art}" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
         aria-labelledby="staticBackdropLabel${art}" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered modal-lg">
+        <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered modal-xl">
           <div class="modal-content">
             <div class="modal-header">
               <h2 class="modal-title fs-5" id="staticBackdropLabel${art}">Art. ${art}</h2>
