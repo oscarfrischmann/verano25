@@ -209,7 +209,6 @@ if (useLineasMujerImgs) {
 				console.log('else');
 				const artRef = await getDoc(doc(db, 'mujer', data.linea));
 				console.log(artRef.data());
-
 				if (artRef.data().hasOwnProperty(data.articulo.articulo.art)) {
 					console.log(artRef.data()[data.articulo.articulo.art]);
 					newImg = artRef.data()[data.articulo.articulo.art];
