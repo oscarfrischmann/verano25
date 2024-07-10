@@ -89,6 +89,15 @@
 }
 
 /*END LOADER*/
+@import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400..700&display=swap');
+
+.dancing {
+  font-family: "Dancing Script";
+  font-optical-sizing: auto;
+  font-weight: 500;
+  font-style: normal;
+}
+
 .navbar-brand img {
   width: 150px;
 }
