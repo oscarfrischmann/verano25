@@ -10,7 +10,7 @@ let lineaCollection;
 let currentLinea;
 let modalLabel;
 console.log(lineaC, category);
-
+lineaC === "lerici" ? (lineaC = "lerich") : (lineaC = params.get("linea"));
 const lineaTitle = document.getElementById("lineaTitle");
 category === "mujer"
   ? (lineaCollection = lineasMujer)
@@ -22,8 +22,12 @@ lineaCollection.forEach((linea) => {
 });
 console.log(currentLinea);
 console.log(currentLinea.data);
+let equis;
+currentLinea.data.linea == "lerich"
+  ? (equis = "lerici")
+  : (equis = currentLinea.data.linea);
 lineaTitle.innerHTML = `
-      <h2>Linea ${lineaC}</h2>
+      <h2>Linea ${equis}</h2>
       <h4>Fondo ${currentLinea.data.fondo}</h4>
       <h4>${currentLinea.data.numeracion[0]} / ${currentLinea.data.numeracion[1]}</h4>  
 `;
@@ -77,7 +81,6 @@ for (let [art, url] of Object.entries(currentLinea)) {
             </div>
             <div class="modal-footer">
               <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-              <button type="button" class="btn btn-primary">Preguntale más a Santi</button>
             </div>
           </div>
         </div>
