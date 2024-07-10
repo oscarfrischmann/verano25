@@ -28,17 +28,30 @@ for (let [art, url] of Object.entries(currentLinea)) {
     for (let i = 0; i < imgQuantity; i++) {
       images.push(url);
     }
-    const urlList = images.map((url) => `<img src=${url}>`);
+    console.log(images);
+    // const urlList = images.map(
+    //   (url) => `<img src=${url} class="card-img rounded mb-2">`
+    // );
+    let urlList = Object.entries(images)
+      .map(([key, values]) => {
+        let innerImgs = values
+          .map(
+            (value) => `<img class='card-img' src="${value}" alt="${value}">`
+          )
+          .join("");
+        return `<div>${innerImgs}</div>`;
+      })
+      .join("");
+    console.log(urlList);
     lineaContainer.innerHTML += `
- <div class="card shadow d-md-none" style="width: 18rem;">
-        <img src="../img/02.jpg" class="card-img-top" alt="...">
-        <img src="../img/02.jpg" class="card-img-bottom" alt="...">
+      <div class="card shadow d-md-none" style="width: 18rem;">
+        ${urlList}
         <div class="card-body">
           <h5 class="card-title">Art. ${art}</h5>
         </div>
       </div>
-      <div class="card shadow d-md-block d-none" style="width: 18rem;">
-        <img src="../img/02.jpg" class="card-img-top" alt="...">
+      <div class="card shadow d-md-block d-none m-2" style="width: 18rem;">
+        ${urlList[0]}
         <div class="card-body">
           <h5 class="card-title">Art. ${art}</h5>
           <button type="button" class="btn btn-info d-md-block d-none" data-bs-toggle="modal"
@@ -57,8 +70,7 @@ for (let [art, url] of Object.entries(currentLinea)) {
               <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-              <img src="../img/02.jpg" class="card-img-top rounded mb-2" alt="...">
-              <img src="../img/02.jpg" class="card-img-bottom rounded" alt="...">
+              ${urlList}
             </div>
             <div class="modal-footer">
               <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
