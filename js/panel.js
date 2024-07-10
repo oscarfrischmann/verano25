@@ -133,8 +133,8 @@ const showImages = (DBdirectory, imgsContainer, button, URLinput, form) => {
 								HTMLimgsContainer.innerHTML += `
             <div>
               <img src=${url} style="width: 200px;" class="mb-3" id=${itemRef.name}>
-              <button id=index-${itemRef.name} class="btn btn-primary ms-2 ${DBdirectory}" disabled>Usar</button>
-            </div>
+              <button id="index-${itemRef.name}" class="btn btn-primary m-2 ${DBdirectory}" disabled>Usar</button>
+						</div>
       `;
 							})
 							.catch((err) => {
@@ -346,16 +346,3 @@ const getLineas = async (category) => {
 export const lineasMujer = await getLineas('mujer');
 export const lineasHombre = await getLineas('hombre');
 lineasMujer.forEach((linea) => console.log(linea.data()));
-//GET DATA for MUJER
-
-// const buscar = async () => {
-//   try {
-//     const modeloRef = doc(db, "mujer", "relax");
-//     const querySNAP = await getDoc(modeloRef);
-//     const data = querySNAP.data();
-//     console.log(data[2006]);
-//   } catch (err) {
-//     console.log(err, "query");
-//   }
-// };
-// await buscar();
