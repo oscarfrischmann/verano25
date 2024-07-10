@@ -44,6 +44,8 @@ for (let [art, url] of Object.entries(currentLinea)) {
     if (art.includes(" ")) {
       modalLabel = art.split(" ").join("");
       console.log(modalLabel);
+    } else {
+      modalLabel = art;
     }
     lineaContainer.innerHTML += `
       <div class="card shadow d-md-none mb-3" style="width: 18rem;">
