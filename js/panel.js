@@ -133,6 +133,7 @@ const showImages = (DBdirectory, imgsContainer, button, URLinput, form) => {
 								HTMLimgsContainer.innerHTML += `
             <div>
               <img src=${url} style="width: 200px;" class="mb-3" id=${itemRef.name}>
+							<span>${itemRef.name}</span>
               <button id="index-${itemRef.name}" class="btn btn-primary m-2 ${DBdirectory}" disabled>Usar</button>
 						</div>
       `;
