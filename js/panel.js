@@ -126,6 +126,7 @@ const showImages = (DBdirectory, imgsContainer, button, URLinput, form) => {
     showImgsButton.addEventListener("click", async () => {
       listAll(listRef)
         .then((res) => {
+          console.log(res.items);
           res.items.forEach((itemRef) => {
             getDownloadURL(ref(storage, `${DBdirectory}/${itemRef.name}`))
               .then((url) => {
@@ -134,7 +135,7 @@ const showImages = (DBdirectory, imgsContainer, button, URLinput, form) => {
             <div>
               <img src=${url} style="width: 200px;" class="mb-3" id=${itemRef.name}>
 							<span>${itemRef.name}</span>
-              <button id="index-${itemRef.name}" class="btn btn-primary m-2 ${DBdirectory}" disabled>Usar</button>
+              <button id="${DBdirectory}-${itemRef.name}" class="btn btn-primary m-2 ${DBdirectory}" disabled>Usar</button>
 						</div>
       `;
               })
@@ -328,8 +329,12 @@ showImages(
 async function useImageButtons(DBdirectory, form, URLinput) {
   setTimeout(() => {
     const use = document.querySelectorAll(`.${DBdirectory}`);
-    console.log(use);
     use.forEach((button, i) => {
+      if (button.id.includes(" ")) {
+        button.id = button.id.split(" ").join("");
+      } else {
+        button.id = button.id;
+      }
       button.removeAttribute("disabled");
       button.addEventListener("click", (event) => {
         const img = imgLinks[i];
@@ -370,7 +375,6 @@ const getLineas = async (category) => {
 //get LINEA
 export const lineasMujer = await getLineas("mujer");
 export const lineasHombre = await getLineas("hombre");
-lineasMujer.forEach((linea) => console.log(linea.data()));
 
 //MODIFICAR ARTíCULO
 
@@ -381,4 +385,16 @@ lineasMujer.forEach((linea) => console.log(linea.data()));
 4 agregar foto
 */
 
-const updateArtForm = document.getElementById("updateArtForm");
+const searchArtForm = document.getElementById("searchArtForm");
+if (searchArtForm) {
+  searchArtForm.addEventListener("submit", (e) => {
+    e.preventDefault();
+    const imgName = searchArtForm["searchArt"].value;
+    const imgFolder = searchArtForm["folder"].value;
+    const imgRef = ref(storage, `${imgFolder}/${imgName}`);
+    getDownloadURL(imgRef).then((url) => {
+      const cont = document.getElementById("displayArtToUpdate");
+      cont.textContent = url;
+    });
+  });
+}

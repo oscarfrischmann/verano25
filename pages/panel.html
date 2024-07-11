@@ -189,11 +189,16 @@
     </section>
     <section class="container hombre-lineas mt-5 border border-5 p-4">
       <div class="container">
-        <h3 class="m-5">Modificar Art.</h3>
+        <h3 class="m-5">Buscar art</h3>
         <div class="">
-          <form action="" id="updateArtForm" class="container">
-            <label for="updateArt">Art:</label>
-            <input type="text" name="updateArt" id="updateArt" class="form-control">
+          <form action="" id="searchArtForm" class="container">
+            <label for="searchArt">Art:</label>
+            <input type="text" name="searchArt" id="searchArt" class="form-control">
+            <select name="folder" class="form-select">
+              <option value="lineasMujer">Mujer</option>
+              <option value="lineasHombre">Hombre</option>
+            </select>
+            <button type="submit" class="btn btn-primary">Buscar</button>
           </form>
           <div id="displayArtToUpdate"></div>
         </div>

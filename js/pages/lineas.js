@@ -22,7 +22,7 @@ lineas.forEach((linea) => {
       <div class="card-body">
         <h5 class="card-title text-uppercase">${lineaName}</h5>
         <p class="card-text lead">${linea.data().data.descripcion}</p>
-        <a href="./linea.html?linea=${lineaName}&category=${category}" class="btn btn-primary">Ver <span class="text-uppercase">${lineaName}</span>
+        <a href="./linea.html?linea=${lineaName}&category=${category}" class="btn btn-primary">Ver</span>
         </a>
       </div>
     </div>

@@ -91,6 +91,10 @@
 /*END LOADER*/
 @import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400..700&display=swap');
 
+.animate__animated.animate__zoomIn {
+  --animate-delay: 0.9s;
+}
+
 .dancing {
   font-family: "Dancing Script";
   font-optical-sizing: auto;

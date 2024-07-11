@@ -9,30 +9,31 @@ let category = params.get("category");
 let lineaCollection;
 let currentLinea;
 let modalLabel;
-console.log(lineaC, category);
 lineaC === "lerici" ? (lineaC = "lerich") : (lineaC = params.get("linea"));
 const lineaTitle = document.getElementById("lineaTitle");
 category === "mujer"
   ? (lineaCollection = lineasMujer)
   : (lineaCollection = lineasHombre);
-console.log(lineaCollection);
 lineaCollection.forEach((linea) => {
-  console.log(linea.data());
   if (linea.data().data.linea === lineaC) currentLinea = linea.data();
 });
-console.log(currentLinea);
-console.log(currentLinea.data);
+const sortedKeys = Object.keys(currentLinea).sort();
+const sortedObj = {};
+sortedKeys.forEach((key) => {
+  sortedObj[key] = currentLinea[key];
+});
+
 let equis;
-currentLinea.data.linea == "lerich"
+sortedObj.data.linea == "lerich"
   ? (equis = "lerici")
-  : (equis = currentLinea.data.linea);
+  : (equis = sortedObj.data.linea);
 lineaTitle.innerHTML = `
       <h2>Linea ${equis}</h2>
-      <h4>Fondo ${currentLinea.data.fondo}</h4>
-      <h4>${currentLinea.data.numeracion[0]} / ${currentLinea.data.numeracion[1]}</h4>  
+      <h4>Fondo ${sortedObj.data.fondo}</h4>
+      <h4>${sortedObj.data.numeracion[0]} / ${sortedObj.data.numeracion[1]}</h4>  
 `;
 
-for (let [art, url] of Object.entries(currentLinea)) {
+for (let [art, url] of Object.entries(sortedObj)) {
   const loader = document.getElementById("loader");
   loader.style.display = "none";
   const imgQuantity = url.length;
@@ -41,7 +42,6 @@ for (let [art, url] of Object.entries(currentLinea)) {
     for (let i = 0; i < imgQuantity; i++) {
       images.push(url[i]);
     }
-    console.log(images);
     const urlList = images
       .map((url) => `<img class="card-img" src=${url}>`)
       .join("");
