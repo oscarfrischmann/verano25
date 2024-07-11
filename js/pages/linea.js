@@ -17,6 +17,7 @@ category === "mujer"
 lineaCollection.forEach((linea) => {
   if (linea.data().data.linea === lineaC) currentLinea = linea.data();
 });
+
 const sortedKeys = Object.keys(currentLinea).sort();
 const sortedObj = {};
 sortedKeys.forEach((key) => {
@@ -32,7 +33,6 @@ lineaTitle.innerHTML = `
       <h4>Fondo ${sortedObj.data.fondo}</h4>
       <h4>${sortedObj.data.numeracion[0]} / ${sortedObj.data.numeracion[1]}</h4>  
 `;
-
 for (let [art, url] of Object.entries(sortedObj)) {
   const loader = document.getElementById("loader");
   loader.style.display = "none";
@@ -47,7 +47,6 @@ for (let [art, url] of Object.entries(sortedObj)) {
       .join("");
     if (art.includes(" ")) {
       modalLabel = art.split(" ").join("");
-      console.log(modalLabel);
     } else {
       modalLabel = art;
     }
