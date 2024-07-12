@@ -1,5 +1,6 @@
 import { lineasHombre } from "../panel.js";
 import { lineasMujer } from "../panel.js";
+import { colegiales } from "../panel.js";
 
 const lineaContainer = document.getElementById("lineaContainer");
 const queryString = window.location.search;
@@ -9,14 +10,30 @@ let category = params.get("category");
 let lineaCollection;
 let currentLinea;
 let modalLabel;
+console.log(lineaC, category);
 lineaC === "lerici" ? (lineaC = "lerich") : (lineaC = params.get("linea"));
 const lineaTitle = document.getElementById("lineaTitle");
-category === "mujer"
-  ? (lineaCollection = lineasMujer)
-  : (lineaCollection = lineasHombre);
-lineaCollection.forEach((linea) => {
-  if (linea.data().data.linea === lineaC) currentLinea = linea.data();
-});
+// category === "mujer"
+//   ? (lineaCollection = lineasMujer)
+//   : (lineaCollection = lineasHombre);
+if (category === "mujer") {
+  lineaCollection = lineasMujer;
+} else if (category === "hombre") {
+  lineaCollection = lineasHombre;
+} else {
+  lineaCollection = colegiales;
+}
+console.log(lineaCollection);
+if (category !== "colegial") {
+  lineaCollection.forEach((linea) => {
+    if (linea.data().data.linea === lineaC) currentLinea = linea.data();
+  });
+} else {
+  lineaCollection.forEach((linea) => {
+    console.log(linea.data());
+    currentLinea = linea.data();
+  });
+}
 
 const sortedKeys = Object.keys(currentLinea).sort();
 const sortedObj = {};
@@ -24,15 +41,17 @@ sortedKeys.forEach((key) => {
   sortedObj[key] = currentLinea[key];
 });
 
-let equis;
-sortedObj.data.linea == "lerich"
-  ? (equis = "lerici")
-  : (equis = sortedObj.data.linea);
-lineaTitle.innerHTML = `
-      <h2>Linea ${equis}</h2>
-      <h4>Fondo ${sortedObj.data.fondo}</h4>
-      <h4>${sortedObj.data.numeracion[0]} / ${sortedObj.data.numeracion[1]}</h4>  
-`;
+if (category !== "colegial") {
+  let equis;
+  sortedObj.data.linea == "lerich"
+    ? (equis = "lerici")
+    : (equis = sortedObj.data.linea);
+  lineaTitle.innerHTML = `
+        <h2>Linea ${equis}</h2>
+        <h4>Fondo ${sortedObj.data.fondo}</h4>
+        <h4>${sortedObj.data.numeracion[0]} / ${sortedObj.data.numeracion[1]}</h4>  
+  `;
+}
 for (let [art, url] of Object.entries(sortedObj)) {
   const loader = document.getElementById("loader");
   loader.style.display = "none";

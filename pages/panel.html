@@ -33,15 +33,17 @@
               <a class="nav-link" href="./mujer.html">mujer</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="./colegial.html">colegial</a>
+              <a class="nav-link" href="./colegial.html?category=colegial&linea=articulos">colegial</a>
             </li>
           </ul>
         </div>
       </div>
-      <button class="login__button login__button-iniciar btn btn-primary m-1 text-nowrap" id="googleLogIn">iniciar
-        sesión</button>
-      <button class="login__button login__button-cerrar btn btn-primary m-1 text-nowrap" id="googleLogOut">cerrar
-        sesión</button>
+      <div>
+        <button class="login__button login__button-iniciar btn btn-primary m-1 text-nowrap" id="googleLogIn">iniciar
+          sesión</button>
+        <button class="login__button login__button-cerrar btn btn-primary m-1 text-nowrap" id="googleLogOut">cerrar
+          sesión</button>
+      </div>
     </nav>
   </header>
   <div class="container d-flex flex-row justify-content-center">
@@ -187,6 +189,34 @@
         </form>
       </div>
     </section>
+
+    <section class="container hombre-lineas mt-5 border border-5 p-4">
+      <h2 class="m-5">Colegial</h2>
+      <form id="colegialImgForm" enctype="multipart/form-data" class="">
+        <div class="mb-3 d-flex">
+          <input class="form-control" style="max-width: 500px;" type="file" id="lineasColegialImgs" multiple>
+          <button type="submit" class="btn btn-primary ms-1">enviar</button>
+        </div>
+      </form>
+      <div class="container">
+        <button type="button" id="showLineasColegialImages" class="btn btn-primary m-5">Ver imágenes</button>
+        <div id="lineasColegialImages" class="container d-flex overflow-x-auto mb-2"></div>
+      </div>
+      <div class="container">
+        <form action="" class="container" id="useColegialImgs">
+          <div class="mb-3">
+            <label for="colegialArt" class="form-label">Art</label>
+            <input type="text" class="form-control" id="colegialArt" name="colegialArt">
+          </div>
+          <div class="mb-3">
+            <label for="colegialImage" class="form-label">URL imágen</label>
+            <input type="text" class="form-control" name="colegialImage" id="colegialImage" placeholder="">
+          </div>
+          <button type="submit" class="btn btn-primary">Cargar</button>
+        </form>
+      </div>
+    </section>
+
     <section class="container hombre-lineas mt-5 border border-5 p-4">
       <div class="container">
         <h3 class="m-5">Buscar art</h3>

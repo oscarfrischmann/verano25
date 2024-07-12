@@ -15,8 +15,15 @@ for (let key in await indexImagesDB) {
 const indexBTNs = document.querySelectorAll(".index button");
 indexBTNs.forEach((button, i) => {
   console.log(button.firstChild.nodeValue);
-  button.setAttribute(
-    "onclick",
-    `location.href ='./pages/${button.firstChild.nodeValue}.html'`
-  );
+  if (button.firstChild.nodeValue !== "colegial") {
+    button.setAttribute(
+      "onclick",
+      `location.href ='./pages/${button.firstChild.nodeValue}.html'`
+    );
+  } else {
+    button.setAttribute(
+      "onclick",
+      `location.href ='./pages/${button.firstChild.nodeValue}.html?category=colegial&linea=articulos'`
+    );
+  }
 });

@@ -114,7 +114,7 @@ const uploadImages = async (HtMLform, fileInput, DBdirectory) => {
 uploadImages("indexForm", "indexImgs", "index");
 uploadImages("mujerImgForm", "lineasMujerImgs", "lineasMujer");
 uploadImages("hombreImgForm", "lineasHombreImgs", "lineasHombre");
-
+uploadImages("colegialImgForm", "lineasColegialImgs", "lineasColegial");
 //LIST IMAGES
 const imgLinks = [];
 
@@ -162,16 +162,28 @@ if (useIndexImgs) {
     let indexImage = {};
     const cat = useIndexImgs["categoryIndex"].value.toLowerCase();
     indexImage[cat] = useIndexImgs["indexImage"].value;
-    // const key = Object.keys(indexImage);
-    // const update = {};
-    // update[key] = true;
-    // console.log(update);
-
     try {
       await updateDoc(doc(db, "index", "indexImages"), indexImage);
       alert("OK!");
     } catch (err) {
       throw new Error("set Category Image", err);
+    }
+  });
+}
+const useColegialImgs = document.getElementById("useColegialImgs");
+if (useColegialImgs) {
+  useColegialImgs.addEventListener("submit", async (e) => {
+    e.preventDefault();
+    let colegialImage = {};
+    const colegialArt = useColegialImgs["colegialArt"].value.toLowerCase();
+    colegialImage[colegialArt] = [useColegialImgs["colegialImage"].value];
+    try {
+      await setDoc(doc(db, "colegial", "articulos"), colegialImage, {
+        merge: true,
+      });
+      alert(" colegial OK!");
+    } catch (err) {
+      throw new Error("art colegial error", err);
     }
   });
 }
@@ -325,6 +337,13 @@ showImages(
   "lineaHombreURL",
   useLineasHombreImgs
 );
+showImages(
+  "lineasColegial",
+  "lineasColegialImages",
+  "showLineasColegialImages",
+  "colegialImage",
+  useColegialImgs
+);
 
 async function useImageButtons(DBdirectory, form, URLinput) {
   setTimeout(() => {
@@ -353,7 +372,7 @@ const getIndexImages = async (collection, document) => {
     const data = imgSnap.data();
     return data;
   } catch (err) {
-    throw new Error("get cambridge price", err);
+    throw new Error("error get index images", err);
   }
 };
 
@@ -375,7 +394,7 @@ const getLineas = async (category) => {
 //get LINEA
 export const lineasMujer = await getLineas("mujer");
 export const lineasHombre = await getLineas("hombre");
-
+export const colegiales = await getLineas("colegial");
 //MODIFICAR ARTíCULO
 
 /* 
