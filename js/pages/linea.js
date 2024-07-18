@@ -62,7 +62,7 @@ for (let [art, url] of Object.entries(sortedObj)) {
       images.push(url[i]);
     }
     const urlList = images
-      .map((url) => `<img class="card-img" src=${url}>`)
+      .map((url) => `<img class="card-img mt-1" src=${url}>`)
       .join("");
     if (art.includes(" ")) {
       modalLabel = art.split(" ").join("");
@@ -98,7 +98,7 @@ for (let [art, url] of Object.entries(sortedObj)) {
             ${urlList}
             </div>
             <div class="modal-footer">
-              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
             </div>
           </div>
         </div>
