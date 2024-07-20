@@ -26,6 +26,7 @@ import {
   signOut,
   onAuthStateChanged,
 } from "https://www.gstatic.com/firebasejs/10.12.3/firebase-auth.js";
+import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.12.3/firebase-analytics.js";
 const firebaseConfig = {
   apiKey: "AIzaSyBroVNx30DfKRGO1yBedvg4cwTnNQeNkqs",
   authDomain: "verano25-fc8ff.firebaseapp.com",
@@ -33,6 +34,7 @@ const firebaseConfig = {
   storageBucket: "verano25-fc8ff.appspot.com",
   messagingSenderId: "852998628617",
   appId: "1:852998628617:web:85a17711c232e308e61fd8",
+  measurementId: "G-LVWECDEGB9",
 };
 
 const app = initializeApp(firebaseConfig);
@@ -41,6 +43,7 @@ const storage = getStorage();
 const storageRef = ref(storage);
 const provider = new GoogleAuthProvider();
 const auth = getAuth(app);
+const analytics = getAnalytics(app);
 
 const login = document.getElementById("googleLogIn");
 const logout = document.getElementById("googleLogOut");

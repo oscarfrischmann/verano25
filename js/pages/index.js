@@ -1,4 +1,5 @@
 import { indexImagesDB } from "../panel.js";
+
 const categoriesCont = document.getElementById("categories");
 for (let key in await indexImagesDB) {
   console.log(indexImagesDB[key]);

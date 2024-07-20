@@ -7,7 +7,6 @@ let lineas;
 let category;
 currentURL.includes("mujer") ? (lineas = lineasMujer) : (lineas = lineasHombre);
 currentURL.includes("mujer") ? (category = "mujer") : (category = "hombre");
-
 lineas.forEach((linea) => {
   let lineaName = linea.data().data.linea;
   if (lineaName === "lerich") {
@@ -22,7 +21,7 @@ lineas.forEach((linea) => {
       <div class="card-body">
         <h5 class="card-title text-uppercase">${lineaName}</h5>
         <p class="card-text lead">${linea.data().data.descripcion}</p>
-        <a href="./linea.html?linea=${lineaName}&category=${category}" class="btn btn-primary">Ver</span>
+        <a href="./linea.html?linea=${lineaName}&category=${category}" class="btn btn-primary">Ver línea</span>
         </a>
       </div>
     </div>

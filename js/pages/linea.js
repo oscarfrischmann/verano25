@@ -11,6 +11,7 @@ let lineaCollection;
 let currentLinea;
 let modalLabel;
 console.log(lineaC, category);
+document.title = `Línea ${lineaC} || Calzados Roble `;
 lineaC === "lerici" ? (lineaC = "lerich") : (lineaC = params.get("linea"));
 const lineaTitle = document.getElementById("lineaTitle");
 // category === "mujer"
