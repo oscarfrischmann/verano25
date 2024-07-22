@@ -12,6 +12,14 @@ let currentLinea;
 let modalLabel;
 console.log(lineaC, category);
 document.title = `Línea ${lineaC} || Calzados Roble `;
+if (typeof gtag === "function") {
+  // Send a pageview with the updated title
+  gtag("event", "page_view", {
+    page_title: document.title,
+    page_location: window.location.href,
+    page_path: window.location.pathname,
+  });
+}
 lineaC === "lerici" ? (lineaC = "lerich") : (lineaC = params.get("linea"));
 const lineaTitle = document.getElementById("lineaTitle");
 // category === "mujer"
